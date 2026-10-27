@@ -1,0 +1,45 @@
+{
+  "name": "@red-cup-engineering/oracle-cloud-engineering-services-section",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Oracle Cloud Infrastructure for the 561 Group: signs OCI API requests, provisions Always Free fleet nodes that cannot be billed, and caps the tenancy at the Always Free amounts with quotas and a $0.01 budget alert.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/oracle-cloud-engineering-services-section.git"
+  },
+  "exports": {
+    "./always-free": "./src/always-free.mjs",
+    "./oci-request": "./src/oci-request.mjs",
+    "./provision-node": "./src/provision-node.mjs"
+  },
+  "bin": {
+    "provision-always-free-node": "scripts/provision-always-free-node.mjs",
+    "apply-always-free-quotas": "scripts/apply-always-free-quotas.mjs",
+    "export-oci-profile": "scripts/export-oci-profile.mjs"
+  },
+  "files": [
+    "src",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "for f in src/*.mjs scripts/*.mjs test/*.mjs; do node --check \"$f\" || exit 1; done; sh -n scripts/install-linux-node.sh",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "engineering",
+    "oracle-cloud",
+    "oci",
+    "always-free",
+    "fleet"
+  ],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
+  }
+}
