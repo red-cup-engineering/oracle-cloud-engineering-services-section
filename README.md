@@ -143,9 +143,9 @@ node-job-service's Termux installer: Node and git from the distro (Oracle Linux 
 user whose systemd user manager runs from boot, `@red-cup-engineering/node-job-service` from
 `https://registry.561.group`, a clone of the fleet store, and `node-job-fleet-join` with the capability tags
 `failure-domain:oracle-free-tier`, `power:mains`, `network:always-on` and `arch:<detected>`. The package reads
-the machine's real cores and memory into its fleet offer, which it publishes when it changes. The pin is `0.4.2`,
-the newest the registry serves (`0.5.0`, which the Termux installer pins, is not published yet); raise it in the
-installer when it is.
+the machine's real cores and memory into its fleet offer, which it publishes when it changes. The pin is `0.5.0`,
+the release carrying failure domains, singleton leases and phone nodes; raise it in the
+installer with each fleet release.
 
 ### The node must do real work
 

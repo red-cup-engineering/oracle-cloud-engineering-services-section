@@ -16,7 +16,7 @@
 set -eu
 
 PACKAGE="@red-cup-engineering/node-job-service"
-VERSION="0.4.2"
+VERSION="0.5.0"
 REGISTRY="https://registry.561.group"
 MIN_NODE_MAJOR=20
 
