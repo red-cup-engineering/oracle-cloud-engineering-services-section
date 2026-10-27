@@ -138,7 +138,7 @@ export function signRequest({ credentials, method, url, body, date }) {
   return { headers, signedHeaders, signingString };
 }
 
-export const defaultEndpointFor = (service, region) => `https://${service}.${region}.oraclecloud.com`;
+export const defaultEndpointFor = (service, region) => `https://${service}.${region}.oci.oraclecloud.com`;
 
 const queryOf = (query = {}) => {
   const pairs = Object.entries(query).filter(([, value]) => value !== undefined && value !== null);
