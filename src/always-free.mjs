@@ -2,7 +2,8 @@
 //
 // The provisioner builds each launch request only from what `admitAlwaysFreeRequest` admitted, and the
 // request it can express is a free one: a shape, size or count outside this file is refused here, before
-// any call to Oracle is made. Zero charge is a property of this file, not of the operator's care.
+// any call to Oracle is made. This is shape/resource admission, not proof of zero charges
+// across the account, elapsed usage and attached services.
 //
 // Everything below is Oracle's own statement at ALWAYS_FREE_DOCUMENTATION_URL, read on 2026-10-27. That page
 // states the Ampere A1 allowance as the first 1,500 OCPU hours and 9,000 GB hours a month, "equivalent to
@@ -47,7 +48,7 @@ export const ALWAYS_FREE = freeze({
     vpusPerGb: 10,
     volumeBackups: 5,
   }),
-  // Outbound transfer is metered by Oracle, not by a request: no launch parameter can exceed it.
+  // Outbound transfer is metered over time. Launch admission does not enforce this usage allowance.
   egressTbPerMonth: 10,
   // Oracle may reclaim an instance idle for 7 days: CPU 95th percentile below 20%, network below 20%,
   // and (A1 only) memory below 20%.
@@ -60,7 +61,8 @@ const isCount = (value) => Number.isSafeInteger(value) && value >= 1;
 const refusal = (code, message) => freeze({ code, message });
 
 /**
- * Decide whether Oracle would charge for launching `request` on top of what the tenancy already uses.
+ * Check requested shape and resource quantities against the stated allowance and observed inventory.
+ * This does not decide complete account billing or enforce usage-based charges.
  *
  * @param {{region?: string, homeRegion?: string, shape: string, count?: number, ocpus?: number,
  *   memoryGb?: number, bootVolumeGb: number, blockVolumeGbs?: number[]}} request What would be launched.

@@ -2,7 +2,7 @@
   "name": "@red-cup-engineering/oracle-cloud-engineering-services-section",
   "version": "0.1.0",
   "type": "module",
-  "description": "Oracle Cloud Infrastructure for the 561 Group: signs OCI API requests, provisions Always Free fleet nodes that cannot be billed, and caps the tenancy at the Always Free amounts with quotas and a $0.01 budget alert.",
+  "description": "Oracle Cloud Infrastructure: signed API requests, resource-shape admission, fleet node provisioning and quota/budget-alert tools. Complete account-wide zero-cost enforcement requires separate qualification.",
   "license": "MIT",
   "repository": {
     "type": "git",

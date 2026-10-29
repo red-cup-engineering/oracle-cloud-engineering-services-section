@@ -11,11 +11,15 @@ Oracle Cloud Infrastructure for the 561 Group, on the Node standard library alon
 
 - `scripts/provision-always-free-node.mjs` gives the fleet an always-on node in a second failure domain, joined to
   the fleet by `@red-cup-engineering/node-job-service`. Idempotent; `--dry-run` prints the exact calls.
-- `scripts/apply-always-free-quotas.mjs` makes the tenancy unable to create anything billable: quota policies at
-  exactly the Always Free amounts and zero elsewhere, and a budget that alerts at $0.01.
+- `scripts/apply-always-free-quotas.mjs` applies resource quota policies and a budget alert at $0.01.
+  These are separate controls; they do not establish a complete zero-cost billing boundary.
 - `scripts/export-oci-profile.mjs` moves the existing OCI CLI profile into the credential store, once.
 
 ## What is already true
+
+The account/profile and capacity statements in this section are retained source observations, not a fresh
+authenticated reading. Read the current account tier, permissions, existing resources, eligible shapes and
+remaining allowance before selecting a real operation. A held key or successful dry run does not prove them.
 
 The tenancy exists (tenancy `emsenn`, home region `us-chicago-1`, CLI profile `BLUE_CORN_CREEK`, API key made
 2026-09-26). **There is no signup.** No instance has ever been created (house record
@@ -84,7 +88,11 @@ The file travels in the instance's `user_data`, which Oracle keeps as instance m
 and the instance itself can read it. Use a token that can do nothing but the fleet store. The URL may not contain
 credentials. Only these four keys are carried.
 
-### 3. Put the tenancy-level guarantee in force (the Leader's step)
+### 3. Review tenancy quota policies under explicit account-wide authority
+
+The current Group authorization is card verification and free access with a $0 cash limit. Before an apply,
+qualify the exact quota changes and their effect on every existing workload in the tenancy. Do not apply a
+tenancy-wide zero policy to a contributor's unrelated resources merely because it was generated for this node.
 
 ```sh
 CREDS="$CRED/bin/credentials get compute.oracle-always-free"
@@ -96,20 +104,23 @@ $CREDS | node $Q --credentials /dev/stdin --alert-email <your address>          
 This writes quota policies in the tenancy: compute, block storage and VCN families at exactly the Always Free
 amounts (stated in one availability domain, because Oracle's compute and storage quotas are per domain, so every
 other domain stays at zero), every other family the Limits service lists at zero, and a $1 budget with an alert at
-1% of it, $0.01. With them in force the tenancy cannot create a billable resource, whatever the account type.
-They do not cap outbound data (10 TB free) or anything Oracle has no quota for; the $0.01 alert is the net for
-those, and it arrives hours late because usage is reported late. A family Oracle's quota language does not know is
+1% of it, $0.01. Provider acceptance/readback and complete cost qualification are separate obligations.
+They do not cap outbound data (10 TB free) or anything Oracle has no quota for. Oracle describes
+[budgets as soft spending limits](https://docs.oracle.com/en-us/iaas/Content/Billing/Concepts/budgetsoverview.htm),
+with periodic alerts; the $0.01 alert is detection after exposure, not a $0 spending cap. A family Oracle's quota language does not know is
 reported in `failed` while the rest still apply; the allowance is written first, and if it is refused nothing else is.
 
-**The account-upgrade decision is yours, and this package does not take it.** Two ways to hold the account:
-
-- *Stay Free Tier only.* Oracle can only refuse a create at a limit. Nothing can be billed. Some regions/shapes
-  stay capacity-starved (Chicago A1).
-- *Upgrade to Pay As You Go, with these quotas applied first.* Oracle does not charge for Always Free resources
-  after an upgrade and charges only above the free limits; with the quotas in force there is no way to create
-  anything above them. An upgrade does not by itself create A1 capacity in Chicago, and nothing here relies on it.
+**An account upgrade is outside the current Group authorization.** Keep the existing account state and verify its
+actual provider-enforced restrictions. Free resource shapes and compartment quotas cannot by themselves prove that
+an upgraded account, all usage dimensions and all attached services will cost $0. The provisioner does not consume
+a quota-application receipt or a complete billing-admission proof before launching. Those are unresolved integration
+obligations in the contributed cloud compute project, not guarantees supplied by the commands above. Out-of-capacity
+remains a refusal; an upgrade does not establish available A1 capacity.
 
 ### 4. Dry run, then the real run
+
+The real run is held until the current account, permissions, complete cost envelope and installed fleet consumer
+are independently qualified. The commands are the existing supplier interface, not evidence that those gates passed.
 
 ```sh
 P=services/engineering-services-section/services/oracle-cloud-engineering-services-section/scripts/provision-always-free-node.mjs

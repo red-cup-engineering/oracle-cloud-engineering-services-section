@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Usage: apply-always-free-quotas.mjs --credentials <file> --alert-email <address> [--dry-run] [--availability-domain <name>]
 //
-// The tenancy-level guarantee. Writes compartment quota policies that cap compute, block storage and VCNs at
+// Writes compartment quota policies intended to cap compute, block storage and VCNs at
 // exactly the Always Free amounts and every other family Oracle lists at zero, plus a budget of $1 with an
-// alert at 1% of it ($0.01). With these in force the tenancy cannot create a billable resource even after an
-// upgrade to Pay As You Go. This is the Leader's step: --dry-run reads from Oracle (GET only; the client
+// alert at 1% of it ($0.01). This does not establish zero-cost protection for uncapped usage or unsupported
+// quota families. Account-wide changes need their own authority; --dry-run reads from Oracle (GET only; the client
 // refuses anything else) and prints every statement it would write.
 //
 // Exit codes: 0 done or dry run / 1 error or some policy refused by Oracle / 2 usage.
