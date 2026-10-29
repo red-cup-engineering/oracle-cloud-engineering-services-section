@@ -1,9 +1,10 @@
-// The tenancy-level guarantee as data: compartment quota policies that cap every billable family.
+// Compartment resource quota policies; not a complete billing guarantee.
 //
 // Quota statements (https://docs.oracle.com/en-us/iaas/Content/Quotas/Concepts/quota_policy_syntax.htm) refuse
 // a create request that would pass them, whatever the account type. With these in force a Pay As You Go
-// tenancy cannot create more than the Always Free amounts of compute and block storage, and nothing at all in
-// any other family Oracle's Limits service lists. Quota names and families are from Oracle's quota pages for
+// tenancy is intended to be capped at the configured compute and block storage amounts, with zero policies
+// proposed for other listed families. Provider acceptance and policy readback remain separate evidence;
+// unsupported quota families and usage charges are not covered. Quota names and families are from Oracle's quota pages for
 // Compute, Block Volume and Networking, read 2026-10-27.
 //
 // Quotas on compute and block storage are per availability domain, so the allowance is stated in exactly one

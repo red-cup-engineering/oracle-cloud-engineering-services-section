@@ -1,8 +1,9 @@
-// Put the tenancy-level guarantee in force: quota policies at exactly the Always Free amounts and zero
+// Apply resource quota policies at the configured Always Free amounts and zero
 // elsewhere, and a budget that alerts at $0.01. Idempotent: it reads what exists and writes what differs.
 //
-// With quotas in force the tenancy cannot create a billable resource, even if it is later upgraded to Pay As
-// You Go. The upgrade itself is the Leader's decision and nothing here performs it.
+// These quota and alert effects do not prove a complete zero-cost billing envelope:
+// usage dimensions without quotas and delayed billing require separate qualification.
+// Account upgrades are outside the current zero-cash authorization; nothing here performs one.
 import { BUDGET, ZERO_POLICY_PREFIX, ALLOWANCE_POLICY, quotaPoliciesOf } from "./always-free-quotas.mjs";
 import { ALWAYS_FREE } from "./always-free.mjs";
 import { OciError } from "./oci-request.mjs";
