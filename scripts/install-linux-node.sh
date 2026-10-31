@@ -9,7 +9,7 @@
 #   NODE_JOB_STORE_URL=https://example/fleet.git    the fleet store (its fleet-facts branch)
 #   NODE_JOB_STORE_USER=... NODE_JOB_STORE_TOKEN=... (optional) git credentials for the store
 # This script holds no credential and refuses to run without that file. It installs Node from the distro,
-# the pinned package from the house registry, and a `fleet` user whose systemd user manager runs the fleet
+# the pinned package from the Group registry, and a `fleet` user whose systemd user manager runs the fleet
 # monitor (node-job-fleet-join installs it). The monitor publishes this node's offer when it changes: events,
 # not a timer. The node's cores and memory are read from the machine by the package, so the offer states
 # the real capacity; the failure domain, power and network facts are the arguments above.
