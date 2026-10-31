@@ -1,7 +1,7 @@
 // The cloud-init that makes a new Linux VM a fleet worker node, and the provisioning file it carries.
 //
 // Mirrors node-job-service's Termux installer: the operator supplies a provisioning file, the node installs
-// the pinned @red-cup-engineering/node-job-service from the house registry and joins the fleet. Nothing here
+// the pinned @red-cup-engineering/node-job-service from the Group registry and joins the fleet. Nothing here
 // holds a credential; the file's values are read at provisioning time and travel only in the instance's
 // user_data. Oracle stores user_data as instance metadata, so the store token must be one scoped to the
 // fleet store alone.
